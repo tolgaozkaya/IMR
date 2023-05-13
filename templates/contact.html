@@ -1,0 +1,99 @@
+{% set encoding = 'utf-8' %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+  <header>
+    <div class="logo">
+      <a href="#"><img src="{{ url_for('static', filename='img/brainstorm.png') }}" alt="Logo"></a>
+      <h1>IMR</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('services') }}">Services</a></li>
+        <li><a href="#">Portfolio</a></li>
+        <li><a href="{{ url_for('blogs') }}">Blog</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="burger-menu">
+      <div class="line"></div>
+      <div class="line"></div>
+      <div class="line"></div>
+    </div>
+  </header>
+
+  <div class="contact">
+    <div class="contact-form">
+      <h2>Contact Us</h2>
+      <form action="/send_email" method="post">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Message:</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <div class="form-group">
+          <button type="submit">Send</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <footer>
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 col-md-6 footer-info">
+            <h3> Intelligent Magnetic Resonance - IMR</h3>
+            <p>Our mission is to provide disease detection services from accurate and reliable MR results using the
+              latest technology.</p>
+            <br>
+          </div>
+          <div class="col-lg-4 col-md-6 footer-contact">
+            <h4>Contact Us</h4>
+            <p>
+              Üniversiteler Mah., ODTÜ Teknokent<br>
+              Ankara, Çankaya 06800<br>
+              Türkiye<br>
+              <strong>Phone:</strong> (0312) 268 32 35<br>
+              <strong>Email:</strong> info@projectimr.com<br>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <p>IMR &copy; 2023</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="https://kit.fontawesome.com/yourfontawesomekey.js" crossorigin="anonymous"></script>
+  <script src="contact.js"></script>
+</body>
+
+</html>

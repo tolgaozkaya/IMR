@@ -1,0 +1,134 @@
+{% set encoding = 'utf-8' %}
+<!DOCTYPE html>
+<html>
+
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Brain Detection</title>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+	<script src="{{ url_for('static', filename='js/index2.js') }}"></script>
+</head>
+
+<body>
+	<header>
+		<div class="logo">
+			<a href="#"><img src="{{ url_for('static', filename='img/brainstorm.png') }}" alt="Logo"></a>
+			<h1>IMR</h1>
+		</div>
+		<nav>
+			<ul>
+				<li><a href="{{ url_for('home') }}">Home</a></li>
+				<li><a href="{{ url_for('about') }}">About</a></li>
+				<li><a href="{{ url_for('services') }}">Services</a></li>
+				<li><a href="#">Portfolio</a></li>
+				<li><a href="{{ url_for('blogs') }}">Blog</a></li>
+				<li><a href="{{ url_for('contact') }}">Contact</a></li>
+			</ul>
+		</nav>
+		<div class="burger-menu">
+			<div class="line"></div>
+			<div class="line"></div>
+			<div class="line"></div>
+		</div>
+	</header>
+	<main>
+		<section>
+			<div class="input-container">
+				<h2>Upload Your MR Result</h2>
+				<div class="image-container">
+					<img id="input-img" src="{{ url_for('static', filename='img/brainstorm-2.png') }}"
+						style="max-height: 200px;">
+				</div>
+				<form action="/predict" method="post" enctype="multipart/form-data">
+					<label for="file-upload" class="custom-file-upload">
+						<i class="fas fa-cloud-upload-alt"></i> Upload File
+					</label>
+					<input id="file-upload" type="file" name="image" accept="image/*" onchange="previewImage()">
+					<button id="detect" type="submit">Detect</button>
+				</form>
+				<script>
+					function previewImage() {
+						var file = document.getElementById("file-upload").files[0];
+						var imageType = /image.*/;
+
+						if (file.type.match(imageType)) {
+							var img = document.getElementById("input-img");
+							var reader = new FileReader();
+
+							reader.onload = function (e) {
+								img.src = URL.createObjectURL(file);
+							}
+							reader.readAsDataURL(file);
+						}
+					}
+				</script>
+			</div>
+		</section>
+
+		<section>
+			<div class="result-container">
+				<h3>Alzheimer Detection Result</h3>
+				<div class="image-container">
+					{% if prediction is defined and prediction == 0 %}
+					<img src="{{ url_for('static', filename='img/check.png') }}" alt="Alzheimer Detection Result">
+					<p>Alzheimer Detected</p>
+					{% elif prediction is defined and prediction == 1 %}
+					<img src="{{ url_for('static', filename='img/check.png') }}" alt="Alzheimer Detection Result">
+					<p>Alzheimer Detected</p>
+					{% elif prediction is defined and prediction == 2 %}
+					<img src="{{ url_for('static', filename='img/check.png') }}" alt="Alzheimer Detection Result">
+					<p>Alzheimer Detected</p>
+					{% elif prediction is defined and prediction == 3 %}
+					<img src="{{ url_for('static', filename='img/multiplication-sign.png') }}"
+						alt="Alzheimer Detection Result">
+					<p>Alzheimer Not Detected</p>
+					{% else %}
+					<img src="{{ url_for('static', filename='img/minus-sign.png') }}" alt="Alzheimer Detection Result">
+					<p>No Image</p>
+					{% endif %}
+				</div>
+				<p>{{ result }}</p>
+			</div>
+		</section>
+	</main>
+
+	<footer>
+		<div class="footer-top">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-4 col-md-6 footer-info">
+						<h3> Intelligent Magnetic Resonance - IMR</h3>
+						<p>Our mission is to provide disease detection services from accurate and reliable MR results
+							using the latest technology.</p><br>
+					</div>
+					<div class="col-lg-4 col-md-6 footer-contact">
+						<h4>Contact Us</h4>
+						<p>
+							Üniversiteler Mah., ODTÜ Teknokent<br>
+                            Ankara, Çankaya 06800<br>
+                            Türkiye<br>
+							<strong>Phone:</strong> (0312) 268 32 35<br>
+							<strong>Email:</strong> info@projectimr.com<br>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<p>IMR &copy; 2023</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<script src="https://kit.fontawesome.com/yourfontawesomekey.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,157 @@
+{% set encoding = 'utf-8' %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog1.css') }}">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <a href="#"><img src="{{ url_for('static', filename='img/brainstorm.png') }}" alt="Logo"></a>
+            <h1>IMR</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('services') }}">Services</a></li>
+                <li><a href="#">Portfolio</a></li>
+                <li><a href="{{ url_for('blogs') }}">Blog</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="burger-menu">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </header>
+    <div class="about-section">
+        <div class="container2">
+            <h1>Alzheimer Detection and Classifier</h1>
+            <h2>1. Problem Definition</h2>
+            <p>Alzheimer is known as the most common cause of dementia, accounting for 2/3 of the whole dementia
+                population, and its cause is still unknown. According to papers from Lancet Neurology, even old
+                theories such as neural inflammations have been disregarded as the cause compared to
+                tau-protein, beta-amyloids, and genetic factors (Apo E4).
+            </p>
+            <p>
+                Before I start, I will explain more about Alzheimer's because the data contains four classes of
+                Alzheimer that depend on the severity of dementia.
+            </p>
+            <p>
+                There are degrees of severity in Alzheimer:
+            </p>
+            <ul>
+                <li>Very mildly demented: This is the stage where patients start to forget where they put their
+                    stuff, other people's names recently, etc. It is hard to detect through cognitive ability
+                    tests.</li><br>
+                <li>Mildly demented: This is the stage where patients don't remember words, can't find their way
+                    to the destination, loss of focus and work abilities. This is also the stage where patients
+                    even forget that they are losing memory. From this stage, cognitive testing can find it.
+                </li><br>
+                <li>Moderately demented: The patients start to forget recent activities, important old
+                    histories, have a hard time calculating the budget, hard to go outside alone, and loss of
+                    empathy.</li>
+            </ul>
+            <br>
+            <p>There are three more stages in the moderately dementia, and in the terminal stage, the patient
+                can't move on their own while they lose the ability to speak. But I assume that the current
+                dataset from Kaggle [https://www.kaggle.com/datasets/sachinkumar413/alzheimer-mri-dataset] is
+                considering all these stages merged inside 'Moderately demented' or not even considered.
+            </p>
+            <p>
+                Knowing these stages is important because the faster the stage the patient is at, the treatment
+                will have a higher effect in terms of slowing the process. If dementia is found during the
+                moderately demented stage, it is known that the patient will pass away in three years. (One of
+                the reported cases is a rhythm guitarist Malcom from the band AC/DC, who was diagnosed with
+                severe dementia in 2014.)
+            </p>
+            <p>
+                Having an AI that detects Alzheimer's dementia in the early stage can allow longer life
+                expectancy for the patient as well as higher life quality overall from the slowdown of dementia.
+            </p>
+            <p>
+                Alzheimer cannot only be found with cognitive ability testing but also through MRI or CT by
+                looking at the ventricles of the brain and cortical atrophy. The theoretical foundation for this
+                project is solid. Doctors find that the patient with Alzheimer's has a brain with enlarged
+                ventricles (that lie in the center of the brain) as well as a thinner cortical grey area of the
+                brain.
+            </p>
+            <h2>2. Solution Specification</h2>
+            <p>This project will go through various ML models from basic (Principal Component Analysis (PCA),
+                Linear Discriminant Analysis (LDA), Support Vector Machine with three different kernels starting
+                with linear to rbf kernel, and finally Convolutional Neural Network models VGG16 for Detection
+                and EfficientNetB0 for Classification) and see which type works the best.</p>
+            <p>This project will contain 2 main sections. Alzheimer Detection and Alzheimer Classification.
+                Detection models (PCA, SVM, LDA, VGG16) will be making judgements about the test data to see
+                whether this person's brain image shows Alzheimer signs.</p>
+            <p>On the other hand, Alzheimer Classification will be done through training the data with different
+                severity for Alzheimer. Actually, this is how the original data is made, and this model can be
+                used as a detector as well. As ML model will provide what stage the patient is, it may be used
+                as a supportive tool for doctors to diagnose Alzheimer's Disease. It brings some light in the
+                practical world as it may find early stages of AD, which can increase life expectancy as well as
+                increased life quality with supportive treatments.</p>
+            <p>Summary: I will try to implement diverse models for Alzheimer detection (non vs with alzheimer)
+                as well as Alzheimer Classifier (non vs very mild vs mild vs moderate). Prepare the data in 2
+                different ways.</p>
+            <p>Alzheimer Detection: Whether the patient has the alzhiemer or not (non vs all other categories).
+                Alzheimer Classifier: Define what stage the patient is in the alzheimer. The models that are
+                going to be tested here are:</p>
+            <ul>
+                <li>PCA for Alzheimer Detection</li>
+                <li>LDA for Alzheimer Detection</li>
+                <li>SVM for Alzheimer Detection and Alzheimer Classifier</li>
+                <li>CNN for Alzheimer Detection (VGG16) and Alzheimer Classifier (EfficientNetB0)</li>
+            </ul>
+            <br>
+            <div style="text-align:center">
+                <img src="{{ url_for('static', filename='img/alzheimer.jpg') }}" style="width: 725px; height: 500px"
+                    alt="Brain Tumor Image">
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 footer-info">
+                        <h3> Intelligent Magnetic Resonance - IMR </h3>
+                        <p>Our mission is to provide disease detection services from accurate and reliable MR
+                            results
+                            using the latest technology.</p><br>
+                    </div>
+                    <div class="col-lg-4 col-md-6 footer-contact">
+                        <h4>Contact Us</h4>
+                        <p>
+                            Üniversiteler Mah., ODTÜ Teknokent<br>
+                            Ankara, Çankaya 06800<br>
+                            Türkiye<br>
+                            <strong>Phone:</strong> (0312) 268 32 35<br>
+                            <strong>Email:</strong> info@projectimr.com<br>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p>IMR &copy; 2023</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="https://kit.fontawesome.com/yourfontawesomekey.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

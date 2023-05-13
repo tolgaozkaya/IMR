@@ -1,0 +1,118 @@
+{% set encoding = 'utf-8' %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <a href="#"><img src="{{ url_for('static', filename='img/brainstorm.png') }}" alt="Logo"></a>
+            <h1>IMR</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('services') }}">Services</a></li>
+                <li><a href="#">Portfolio</a></li>
+                <li><a href="{{ url_for('blogs') }}">Blog</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="burger-menu">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </header>
+    <div class="about-section">
+        <div class="container2">
+            <h1>About Us</h1>
+            <p>IMR is a project aimed at providing state-of-the-art technology for the detection of brain
+                abnormalities using machine learning algorithms. Our team consists of experienced professionals who are
+                passionate about advancing the field of medical technology and improving patient outcomes.</p>
+            <h2>Our Mission</h2>
+            <p>Our mission is to make cutting-edge brain detection technology accessible to medical professionals and
+                patients worldwide. We believe that early detection and accurate diagnosis of brain abnormalities can
+                significantly improve treatment outcomes and quality of life for patients.</p>
+            <h2>Our Team</h2>
+            <ul class="team-members" style="list-style-type: none;">
+                <li>
+                    <a href="https://www.linkedin.com/in/tolgaozkaya/">
+                        <img src="https://media.licdn.com/dms/image/D4D03AQF-aVqu5KP3EQ/profile-displayphoto-shrink_800_800/0/1679017039658?e=2147483647&v=beta&t=fzSamAXzE0lonObfqbgZBH6kXBJLiRu6E6hA_Bx8V0Q"
+                            alt="Team Member 1" style="width: 200px; height: 200px; border-radius: 60%;">
+                        <h3>Tolga Özkaya</h3>
+                        <p>Founder & CEO</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/berkant-yiğit-doğan-833085205/">
+                        <img src="https://media.licdn.com/dms/image/C4D03AQHkJAa7-6o8xA/profile-displayphoto-shrink_400_400/0/1661259929641?e=1686182400&v=beta&t=5xVJAPBiKQZ3aowCHPos9wLithX6cF_A6kK4ifSKB20"
+                            alt="Team Member 2" style="width: 200px; height: 200px; border-radius: 60%;">
+                        <h3>Berkant Yiğit Doğan</h3>
+                        <p>Chief Medical Officer</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/ege-moroglu-37a30b190/">
+                        <img src="https://media.licdn.com/dms/image/C4D03AQEfs1bZKQPTrw/profile-displayphoto-shrink_400_400/0/1564658402628?e=1686182400&v=beta&t=__W4FrxSMKybZ1ybItosGUPLA5GEteNZC9W0yuGGTZ4"
+                            alt="Team Member 3" style="width: 200px; height: 200px; border-radius: 60%;">
+                        <h3>Ege Moroğlu</h3>
+                        <p>Lead Data Scientist</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="https://media.licdn.com/dms/image/C4D03AQEfs1bZKQPTrw/profile-displayphoto-shrink_400_400/0/1564658402628?e=1686182400&v=beta&t=__W4FrxSMKybZ1ybItosGUPLA5GEteNZC9W0yuGGTZ4"
+                            alt="Team Member 4" style="width: 200px; height: 200px; border-radius: 60%;">
+                        <h3>Ege Moroğlu</h3>
+                        <p>Lead Data Scientist</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 footer-info">
+                        <h3> Intelligent Magnetic Resonance - IMR </h3>
+                        <p>Our mission is to provide disease detection services from accurate and reliable MR results
+                            using the latest technology.</p><br>
+                    </div>
+                    <div class="col-lg-4 col-md-6 footer-contact">
+                        <h4>Contact Us</h4>
+                        <p>
+                            Üniversiteler Mah., ODTÜ Teknokent<br>
+                            Ankara, Çankaya 06800<br>
+                            Türkiye<br>
+                            <strong>Phone:</strong> (0312) 268 32 35<br>
+                            <strong>Email:</strong> info@projectimr.com<br>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p>IMR &copy; 2023</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="https://kit.fontawesome.com/yourfontawesomekey.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

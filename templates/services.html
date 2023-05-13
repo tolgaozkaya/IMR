@@ -1,0 +1,99 @@
+{% set encoding = 'utf-8' %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/services.css') }}">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <a href="#"><img src="{{ url_for('static', filename='img/brainstorm.png') }}" alt="Logo"></a>
+            <h1>IMR</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('services') }}">Services</a></li>
+                <li><a href="#">Portfolio</a></li>
+                <li><a href="{{ url_for('blogs') }}">Blog</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="burger-menu">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </header>
+
+    <section class="services">
+        <h1>Our Services</h1>
+        <div class="services-container">
+            <div class="service">
+                <a href="{{ url_for('home') }}">
+                    <img
+                        src="https://i0.wp.com/post.healthline.com/wp-content/uploads/2022/02/2009199_Understanding-Brain-Tumors-01.jpg?w=1155&amp;h=1887">
+                    <h2>Brain Tumor Detection</h2>
+                    <p> &#183; Using EfficientNetB0</p>
+                </a>
+            </div>
+            <div class="service">
+                <a href="{{ url_for('alzheimerdetection') }}">
+                    <img src="{{ url_for('static', filename='img/alzheimer.jpg') }}">
+                    <h2>Alzheimer <br> Detection</h2>
+                    <p> &#183; Using SVM(Kernel:Linear)</p>
+                </a>
+            </div>
+            <div class="service">
+                <a href="">
+                    <img src="service3.png">
+                    <h2></h2>
+                    <p> </p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 footer-info">
+                        <h3> Intelligent Magnetic Resonance - IMR </h3>
+                        <p>Our mission is to provide disease detection services from accurate and reliable MR results
+                            using the latest technology.</p><br>
+                    </div>
+                    <div class="col-lg-4 col-md-6 footer-contact">
+                        <h4>Contact Us</h4>
+                        <p>
+                            Üniversiteler Mah., ODTÜ Teknokent<br>
+                            Ankara, Çankaya 06800<br>
+                            Türkiye<br>
+                            <strong>Phone:</strong> (0312) 268 32 35<br>
+                            <strong>Email:</strong> info@projectimr.com<br>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p>IMR &copy; 2023</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="https://kit.fontawesome.com/yourfontawesomekey.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

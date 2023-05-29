@@ -28,7 +28,7 @@ class FixedDropout(tf.keras.layers.Dropout):
 
 with keras.utils.custom_object_scope({'FixedDropout': FixedDropout}):
     model = load_model(
-        '/Users/tolgaozkaya/Downloads/IMR/EfficientNetB7.h5')
+        '/Users/tolgaozkaya/Downloads/IMR/EfficientNetB0.h5')
 
 
 @app.route('/detect', methods=['POST'])

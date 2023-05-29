@@ -1,3 +1,4 @@
+from email.message import EmailMessage
 from skimage.io import imread
 import joblib
 from flask import Flask, render_template, request
@@ -25,10 +26,9 @@ class FixedDropout(tf.keras.layers.Dropout):
         return tuple([shape if shape is not None else tf.shape(inputs)[i] for i, shape in enumerate(self.noise_shape)])
 
 
-# Load the model with custom object scope
 with keras.utils.custom_object_scope({'FixedDropout': FixedDropout}):
     model = load_model(
-        '/Users/tolgaozkaya/Downloads/IMR/EfficientNetB0.h5')
+        '/Users/tolgaozkaya/Downloads/IMR/EfficientNetB7.h5')
 
 
 @app.route('/detect', methods=['POST'])
@@ -91,38 +91,37 @@ def predict():
     return render_template('alzheimerdetection.html', image=img, prediction=prediction.tolist(), result=result)
 
 
-@app.route('/send_mail', methods=['GET', 'POST'])
+@app.route('/send_mail', methods=['POST'])
 def send_mail():
-    if request.method == 'POST':
-        name = request.form['name']
-        email = request.form['email']
-        message = request.form['message']
+    name = request.form.get('name')
+    email = request.form.get('email')
+    subject = request.form.get('subject')
+    message = request.form.get('message')
 
-        # email body
-        body = f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}"
+    if not name or not email or not subject or not message:
+        return render_template('contact.html', error='Please fill in all fields.')
 
-        # send email
-        try:
-            server = smtplib.SMTP('smtp.gmail.com', 587)
+    msg = EmailMessage()
+    msg.set_content(f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}")
+    msg['Subject'] = subject
+    msg['From'] = email
+    msg['To'] = 'info@projectimr.com'
+
+    try:
+        with smtplib.SMTP('smtp.gmail.com', 587) as server:
             server.starttls()
-            server.login('your_email@gmail.com', 'your_password')
-            server.sendmail('your_email@gmail.com',
-                            'tolgaozkya14@gmail.com', body)
-            server.quit()
-            return render_template('contact.html', success=True)
-        except:
-            return render_template('contact.html', success=False)
-
-    return render_template('contact.html', success=None)
+            server.login('info@projectimr.com', 'your_password')
+            server.send_message(msg)
+        return render_template('contact.html', success=True)
+    except smtplib.SMTPException:
+        return render_template('contact.html', error='An error occurred while sending the email.')
 
 
 @app.route('/stop', methods=['POST'])
 def shutdown():
-    # Check if the request is coming from a trusted source
     if request.remote_addr != '127.0.0.1':
         return "Unauthorized", 403
 
-    # Shut down the server
     shutdown_func = request.environ.get('werkzeug.server.shutdown')
     if shutdown_func is None:
         raise RuntimeError('Not running with the Werkzeug Server')
@@ -167,7 +166,7 @@ def blog1():
 
 @app.route('/blog2')
 def blog2():
-    return render_template('blog3.html')
+    return render_template('blog2.html')
 
 
 @app.route('/alzheimerdetection')

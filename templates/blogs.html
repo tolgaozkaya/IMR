@@ -20,7 +20,6 @@
                 <li><a href="{{ url_for('home') }}">Home</a></li>
                 <li><a href="{{ url_for('about') }}">About</a></li>
                 <li><a href="{{ url_for('services') }}">Services</a></li>
-                <li><a href="#">Portfolio</a></li>
                 <li><a href="{{ url_for('blogs') }}">Blog</a></li>
                 <li><a href="{{ url_for('contact') }}">Contact</a></li>
             </ul>
@@ -49,22 +48,14 @@
                 <a href="{{ url_for('blog2') }}">
                     <img src="{{ url_for('static', filename='img/alzheimer.jpg') }}">
                     <h2>Alzheimer Detection and Classifier</h2>
-                    <p>Alzheimer is known as the most common cause of dementia, accounting for 2/3 of the whole dementia
-                        population, and its cause is still unknown. According to papers from Lancet Neurology, even old
-                        theories such as neural inflammations have been disregarded as the cause compared to
-                        tau-protein, beta-amyloids, and genetic factors (Apo E4).</p>
-                </a>
-            </div>
-            <div class="post">
-                <a href="{{ url_for('blog1') }}">
-                    <img src="img/post-3.jpg">
-                    <h2></h2>
-                    <p></p>
+                    <p>Alzheimer's is the main cause of dementia, comprising 2/3 of cases.
+                        Recent studies emphasize tau protein, beta-amyloids, and genetic factors (ApoE4) over neural
+                        inflammation as potential causes (Lancet Neurology).</p>
                 </a>
             </div>
         </div>
     </section>
-
+    
     <footer>
         <div class="footer-top">
             <div class="container">

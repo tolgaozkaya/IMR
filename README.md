@@ -75,7 +75,7 @@ The file structure of the project is as follows:
 
 - `svm_model.joblib`: Pretrained SVM model for Alzheimer's disease prediction.
 
-- `EfficientNetB0.h5`: Pretrained Keras model for brain tumor detection.
+- `EfficientNetB7.h5`: Pretrained Keras model for brain tumor detection.
 
 - `README.md`: This file providing information about the project.
 

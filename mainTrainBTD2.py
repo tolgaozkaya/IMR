@@ -1,23 +1,13 @@
-import chardet
-import warnings
-import pandas as pd
-import numpy as np
-import cv2
 import os
-import random
-import matplotlib.pyplot as plt
-import seaborn as sns
+import warnings
 
-from sklearn.metrics import classification_report, confusion_matrix
 from keras.preprocessing.image import ImageDataGenerator
-from keras.layers import Input, Activation, LeakyReLU, Dropout, Dense, Flatten, Conv2D, MaxPool2D, BatchNormalization
+from keras.layers import Flatten, Dense, Dropout
 from keras.models import Sequential
-from keras.callbacks import TensorBoard
-from keras.optimizers import Adam
+from keras.optimizers.legacy import Adam
 from keras.losses import BinaryCrossentropy
 
 import tensorflow as tf
-import tensorflow_hub as hub
 from efficientnet.keras import EfficientNetB7
 
 os.environ['TF_XLA_FLAGS'] = '--tf_xla_enable_xla_devices'
@@ -83,32 +73,6 @@ history = model.fit(train_data,
                     steps_per_epoch=len(train_data),
                     validation_data=test_data,
                     validation_steps=len(test_data))
-
-
-def plot_curves(history):
-    import matplotlib.pyplot as plt
-
-    loss = history.history["loss"]
-    val_loss = history.history["val_loss"]
-
-    accuracy = history.history["accuracy"]
-    val_accuracy = history.history["val_accuracy"]
-
-    epochs = range(len(history.history["loss"]))
-
-    plt.plot(epochs, loss, label="training_loss")
-    plt.plot(epochs, val_loss, label="val_loss")
-    plt.title("loss")
-    plt.xlabel("epochs")
-    plt.legend()
-
-    plt.figure()
-    plt.plot(epochs, accuracy, label="training_accuracy")
-    plt.plot(epochs, val_accuracy, label="val_accuracy")
-    plt.title("accuracy")
-    plt.xlabel("epochs")
-    plt.legend()
-plot_curves(history)
 
 # Modeli kaydetme
 model.save(os.path.join(PROJECT_FOLDER, "EfficientNetB7.h5"))

@@ -1,41 +1,24 @@
-import chardet
-import warnings
-import pandas as pd
-import numpy as np
-import cv2
 import os
 import random
 import matplotlib.pyplot as plt
-import seaborn as sns
 
-from sklearn.metrics import classification_report, confusion_matrix
+import pandas as pd
+import numpy as np
+import cv2
+
 from keras.preprocessing.image import ImageDataGenerator
-from keras.layers import Input, Activation, LeakyReLU, Dropout, Dense, Flatten, Conv2D, MaxPool2D, BatchNormalization
+from keras.layers import Flatten, Dense, Dropout
 from keras.models import Sequential
-from keras.callbacks import TensorBoard
-from keras.optimizers import Adam
+from keras.optimizers.legacy import Adam
 from keras.losses import BinaryCrossentropy
 
-import tensorflow as tf
-import tensorflow_hub as hub
 from efficientnet.keras import EfficientNetB0
-
-os.environ['TF_XLA_FLAGS'] = '--tf_xla_enable_xla_devices'
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-
-warnings.filterwarnings('ignore')
 
 MAIN_DIR = "/Users/tolgaozkaya/Downloads/IMR/datasets/"
 SEED = 40
-os.listdir(MAIN_DIR)
-for dirpath, dirnames, filenames in os.walk(MAIN_DIR):
-    print(f"{len(dirnames)} directories and {len(filenames)} images in {dirpath}")
 
-# Inspect the raw data before preprocessing
-
-
+# Rastgele bir görüntü göster
 def view_random_image():
-
     subdirs = ['yes/', 'no/']
     subdir = np.random.choice(subdirs)
     target_folder = MAIN_DIR + subdir
@@ -48,18 +31,12 @@ def view_random_image():
     plt.title(img.shape)
     plt.show()
 
-os.environ['TF_XLA_FLAGS'] = '--tf_xla_enable_xla_devices'
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-
-# Constants
-MAIN_DIR = "/Users/tolgaozkaya/Downloads/IMR/datasets/"
-
-SEED = 40
+# Sabitler
 IMG_SHAPE = (256, 256)
 BATCH_SIZE = 32
 INPUT_SIZE = 256
 
-# Data generators
+# Veri üreteçleri
 datagen = ImageDataGenerator(rescale=1/255., validation_split=0.5)
 
 train_data = datagen.flow_from_directory(MAIN_DIR,
@@ -76,12 +53,9 @@ test_data = datagen.flow_from_directory(MAIN_DIR,
                                         shuffle=True,
                                         subset="validation")
 
-# Build the model
-tf.random.set_seed(SEED)
-
+# Modeli oluştur
 model = Sequential()
 
-# Load the EfficientNetB0 model pretrained on ImageNet
 efficientnet = EfficientNetB0(include_top=False, input_shape=(INPUT_SIZE, INPUT_SIZE, 3))
 efficientnet.trainable = False
 
@@ -91,17 +65,17 @@ model.add(Dense(256, activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(1, activation='sigmoid'))
 
-# Compile the model
+# Modeli derle
 model.compile(loss=BinaryCrossentropy(),
               optimizer=Adam(),
               metrics=["accuracy"])
 
-# Fit the model
+# Modeli eğit
 history = model.fit(train_data,
                     epochs=10,
                     steps_per_epoch=len(train_data),
                     validation_data=test_data,
                     validation_steps=len(test_data))
 
-# Save the model
+# Modeli kaydet
 model.save("EfficientNetB0.h5")

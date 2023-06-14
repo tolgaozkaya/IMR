@@ -1,36 +1,36 @@
-from email.message import EmailMessage
-from skimage.io import imread
-import joblib
-from flask import Flask, render_template, request
-import tensorflow as tf
 import os
-import numpy as np
-from tensorflow import keras
-from flask import Flask, request, jsonify, render_template
 from PIL import Image
-import tensorflow_hub as hub
+import numpy as np
 import smtplib
+from email.message import EmailMessage
+
+import tensorflow as tf
+from tensorflow import keras
+import tensorflow_hub as hub
+
+import joblib
+from flask import Flask, render_template, request, jsonify, url_for
+from skimage.io import imread
 from keras.models import load_model
-from flask import url_for
+
 os.environ['TF_XLA_FLAGS'] = '--tf_xla_enable_xla_devices'
 
-# Create a Flask app
+# Flask uygulamasını oluştur
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 
-
+# Dropout sınıfını özelleştirilmiş bir şekilde genişlet
 class FixedDropout(tf.keras.layers.Dropout):
     def _get_noise_shape(self, inputs):
         if self.noise_shape is None:
             return self.noise_shape
         return tuple([shape if shape is not None else tf.shape(inputs)[i] for i, shape in enumerate(self.noise_shape)])
 
-
+# Önceden eğitilmiş bir modeli yükle
 with keras.utils.custom_object_scope({'FixedDropout': FixedDropout}):
-    model = load_model(
-        '/Users/tolgaozkaya/Downloads/IMR/EfficientNetB7.h5')
+    model = load_model('EfficientNetB7.h5')
 
-
+# Beyin tumor tespiti yapmak için kullanılan endpoint
 @app.route('/detect', methods=['POST'])
 def detect():
 
@@ -57,32 +57,32 @@ def detect():
 
 svm = joblib.load('svm_model.joblib')
 
-
+# Alzheimer tespiti yapmak için kullanılan endpoint
 @app.route('/predict', methods=['POST'])
 def predict():
-    # Load image and preprocess
+    # Görüntüyü yükle ve ön işleme yap
     file = request.files['image']
     img = Image.open(file)
     img_size = (64, 64)
 
-    # Resize image to img_size
+    # Görüntüyü img_size boyutuna yeniden boyutlandır
     img = img.resize(img_size)
 
-    # Convert image to grayscale
+    # Görüntüyü gri tonlamaya dönüştür
     img_gray = img.convert("L")
 
-    # Convert image to numpy array and flatten
+    # Görüntüyü numpy dizisine dönüştür ve düzleştir
     img_gray_arr = np.array(img_gray)
     img_gray_arr_flat = img_gray_arr.reshape(1, -1)
 
-    # Normalize pixel values to be between 0 and 1
+    # Piksel değerlerini 0 ile 1 arasında normalize et
     img_gray_arr_flat_norm = img_gray_arr_flat / 255.0
     img_processed = img_gray_arr_flat_norm
 
-    # Make prediction with SVM model
+    # SVM modeli ile tahmin yap
     prediction = svm.predict(img_processed)[0]
 
-    # Get class name for prediction
+    # Tahmin için sınıf adını al
     class_names = ["Very_Mild_Demented", "Mild_Demented",
                    "Moderate_Demented", "Non_Demented"]
     class_name = class_names[prediction]

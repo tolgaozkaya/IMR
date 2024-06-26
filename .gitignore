@@ -134,7 +134,6 @@ dmypy.json
 .pyre/
 
 datasets/
-models/
 data/
 dataset_alzheimer/
 logs/

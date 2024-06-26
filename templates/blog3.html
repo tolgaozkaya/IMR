@@ -1,4 +1,3 @@
-{% set encoding = 'utf-8' %}
 <!DOCTYPE html>
 <html>
 
@@ -7,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/blog1.css') }}">
+    <title>Brain Tumor Detection with YOLOv8</title>
 </head>
 
 <body>
@@ -20,7 +20,6 @@
                 <li><a href="{{ url_for('home') }}">Home</a></li>
                 <li><a href="{{ url_for('about') }}">About</a></li>
                 <li><a href="{{ url_for('services') }}">Services</a></li>
-                <li><a href="#">Portfolio</a></li>
                 <li><a href="{{ url_for('blogs') }}">Blog</a></li>
                 <li><a href="{{ url_for('contact') }}">Contact</a></li>
             </ul>
@@ -31,155 +30,54 @@
             <div class="line"></div>
         </div>
     </header>
+
     <div class="about-section">
         <div class="container2">
-            <h1>Alzheimer Detection and Classifier using SVM (Kernel: Linear)</h1>
-            <h2>1. Problem Definition</h2>
+            <h1>Brain Tumor Detection with YOLOv8</h1>
 
-            <body>
-                <h2>Introduction:</h2>
-                <p>Alzheimer's disease (AD) is a neurodegenerative disease that is the leading cause of dementia and
-                    affects millions of people worldwide. Early detection of AD is critical for timely treatment and
-                    management, as it can significantly improve the quality of life for patients and their families.
-                    Machine learning algorithms have shown great promise in detecting AD using various biomarkers, such
-                    as MRI images, cerebrospinal fluid, and blood samples. One such algorithm is Support Vector Machines
-                    (SVM) with a linear kernel. In this blog post, we will explore the use of SVM with a linear kernel
-                    for AD detection using MRI images, its advantages and limitations, and future research directions.
-                </p>
-                <p>Alzheimer is known as the most common cause of dementia, accounting for 2/3 of the whole dementia
-                    population, and its cause is still unknown. According to papers from Lancet Neurology, even old
-                    theories such as neural inflammations have been disregarded as the cause compared to
-                    tau-protein, beta-amyloids, and genetic factors (Apo E4).
-                </p>
-                <p>
-                    I will explain more about Alzheimer's because the data contains four classes of
-                    Alzheimer that depend on the severity of dementia.
-                </p>
-                <br>
-                <p>
-                    There are degrees of severity in Alzheimer:
-                </p>
-                <ul>
-                    <li>Very mildly demented: This is the stage where patients start to forget where they put their
-                        stuff, other people's names recently, etc. It is hard to detect through cognitive ability
-                        tests.</li><br>
-                    <li>Mildly demented: This is the stage where patients don't remember words, can't find their way
-                        to the destination, loss of focus and work abilities. This is also the stage where patients
-                        even forget that they are losing memory. From this stage, cognitive testing can find it.
-                    </li><br>
-                    <li>Moderately demented: The patients start to forget recent activities, important old
-                        histories, have a hard time calculating the budget, hard to go outside alone, and loss of
-                        empathy.</li>
-                </ul>
-                <br>
-                <p>There are three more stages in the moderately dementia, and in the terminal stage, the patient
-                    can't move on their own while they lose the ability to speak. But I assume that the current
-                    dataset from Kaggle [https://www.kaggle.com/datasets/sachinkumar413/alzheimer-mri-dataset] is
-                    considering all these stages merged inside 'Moderately demented' or not even considered.
-                </p>
-                <p>
-                    Knowing these stages is important because the faster the stage the patient is at, the treatment
-                    will have a higher effect in terms of slowing the process. If dementia is found during the
-                    moderately demented stage, it is known that the patient will pass away in three years. (One of
-                    the reported cases is a rhythm guitarist Malcom from the band AC/DC, who was diagnosed with
-                    severe dementia in 2014.)
-                </p>
-                <p>
-                    Having an AI that detects Alzheimer's dementia in the early stage can allow longer life
-                    expectancy for the patient as well as higher life quality overall from the slowdown of dementia.
-                </p>
-                <p>
-                    Alzheimer cannot only be found with cognitive ability testing but also through MRI or CT by
-                    looking at the ventricles of the brain and cortical atrophy. The theoretical foundation for this
-                    project is solid. Doctors find that the patient with Alzheimer's has a brain with enlarged
-                    ventricles (that lie in the center of the brain) as well as a thinner cortical grey area of the
-                    brain.
-                </p>
-                <h2>2. Data:</h2>
-                <h2>About Dataset</h2>
-                <p>The Alzheimer MRI Preprocessed Dataset consists of preprocessed MRI (Magnetic Resonance Imaging)
-                    images collected from several websites, hospitals, and public repositories. All the images are
-                    resized into 128 x 128 pixels. The dataset has four classes of images, with a total of 6400 MRI
-                    images:</p>
-                <ul>
-                    <li>Class 1: Mild Demented (896 images)</li>
-                    <li>Class 2: Moderate Demented (64 images)</li>
-                    <li>Class 3: Non Demented (3200 images)</li>
-                    <li>Class 4: Very Mild Demented (2240 images)</li>
-                </ul>
-                <br>
-                <p>The main motive behind sharing this dataset is to design/develop an accurate framework or
-                    architecture for the classification of Alzheimer's Disease.</p>
-                <h2>References</h2>
-                <ul>
-                    <li><a href="https://adni.loni.usc.edu/">https://adni.loni.usc.edu/</a></li>
-                    <li><a href="https://www.alzheimers.net/">https://www.alzheimers.net/</a></li>
-                    <li><a
-                            href="https://www.kaggle.com/datasets/jboysen/mri-and-alzheimers">https://www.kaggle.com/datasets/jboysen/mri-and-alzheimers</a>
-                    </li>
-                    <li><a
-                            href="https://ieeexplore.ieee.org/document/9521165">https://ieeexplore.ieee.org/document/9521165</a>
-                    </li>
-                    <li><a
-                            href="https://catalog.data.gov/dataset/alzheimers-disease-and-healthy-aging-data">https://catalog.data.gov/dataset/alzheimers-disease-and-healthy-aging-data</a>
-                    </li>
-                    <li><a
-                            href="https://www.nature.com/articles/s41598-020-79243-9">https://www.nature.com/articles/s41598-020-79243-9</a>
-                    </li>
-                    <li><a
-                            href="https://cordis.europa.eu/article/id/429468-the-final-epad-dataset-is-now-available-on-the-alzheimer-s-disease-workbench">https://cordis.europa.eu/article/id/429468-the-final-epad-dataset-is-now-available-on-the-alzheimer-s-disease-workbench</a>
-                    </li>
-                </ul>
-                <h2>3. Methodology:</h2>
-                <p>We split the ADNI dataset into training and testing sets with a ratio of 80:20. We applied
-                    principal
-                    component analysis (PCA) to reduce the dimensionality of the data before training the SVM model.
-                    PCA
-                    is a widely used technique for reducing the dimensionality of data while preserving most of the
-                    variability in the data. We also used cross-validation to tune the hyperparameters of the SVM
-                    model.
-                </p>
-                <h2>4. Results:</h2>
-                <p>Our SVM model achieved an accuracy of 98% in the classification of AD patients and healthy controls.
-                    The sensitivity and specificity of the model were 97.5% and 98.6%, respectively. The area under the
-                    ROC curve was 0.987, indicating excellent discriminative power. These results demonstrate the
-                    effectiveness of SVM with a linear kernel for AD detection using MRI images.</p>
-                <h2>5. Advantages and Limitations:</h2>
-                <p>One of the advantages of SVM with a linear kernel is its ability to work with high-dimensional
-                    data,
-                    such as MRI images. This makes SVM with a linear kernel particularly useful for AD detection
-                    using
-                    imaging data. SVM with a linear kernel also provides a clear separation between classes, making
-                    it
-                    easier to interpret the results. However, one of the limitations of SVM with a linear kernel is
-                    that
-                    it may not perform well when the data is non-linearly separable. In such cases, SVM with a
-                    non-linear kernel may be more appropriate.</p>
-                <h2>6. Future Research Directions:</h2>
-                <p>Future research on SVM with a linear kernel for AD detection should focus on several areas.
-                    Firstly,
-                    larger datasets should be used to validate the performance of the model. Secondly, the model
-                    should
-                    be tested on different populations and imaging protocols to investigate its generalizability.
-                    Thirdly, the model should be compared to other machine learning algorithms to determine its
-                    relative
-                    effectiveness. Finally, the model should be extended to include other biomarkers, such as
-                    cerebrospinal fluid and blood samples, to improve its accuracy and sensitivity.</p>
-                <h2>7. Conclusion:</h2>
-                <p>In conclusion , SVM with a linear kernel is a promising machine learning algorithm for AD
-                    detection
-                    using MRI images. Our results showed that SVM with a linear kernel achieved high accuracy,
-                    sensitivity, and specificity in the classification of AD patients and healthy controls. However,
-                    further research is needed to validate the performance of the model on larger datasets and
-                    different
-                    populations and imaging protocols. In addition, the model should be extended to include other
-                    biomarkers to improve its accuracy and sensitivity. With continued research and development, SVM
-                    with a linear kernel has the potential to become an important tool for early detection and
-                    management of AD, ultimately improving the lives of millions of people worldwide.</p> <br>
-                <div style="text-align:center">
-                    <img src="{{ url_for('static', filename='img/alzheimer.jpg') }}" style="width: 725px; height: 500px"
-                        alt="Brain Tumor Image">
-                </div>
+            <p>Recent advancements in the field of medicine have significantly improved diagnostic and treatment processes. 
+            Brain tumors can be a serious health issue if not detected early. In this blog post, we will discuss our project 
+            on brain tumor detection using the YOLOv8 model.</p>
+
+            <h2>About the Project</h2>
+            <p>This project aims to detect brain tumors using the YOLOv8 (You Only Look Once) model. YOLOv8 is a powerful deep 
+            learning algorithm used for real-time object detection. The model can accurately detect brain tumors in MRI images, 
+            providing healthcare professionals with fast and reliable diagnoses.</p>
+
+            <div style="text-align:center">
+                <img src="https://i0.wp.com/post.healthline.com/wp-content/uploads/2022/02/2009199_Understanding-Brain-Tumors-01.jpg?w=1155&amp;h=1887"
+                    style="width: 725px; height: 500px" alt="Brain Tumor Image">
+            </div>
+            <br>
+
+            <h2>YOLOv8 Model</h2>
+            <p>YOLOv8 is one of the latest models used for object detection. As the eighth version of the YOLO family, this model 
+            stands out with its high performance and fast processing capabilities. Customized for brain tumor detection, this model 
+            can successfully identify abnormal cell clusters in MRI images.</p>
+
+            <div style="text-align:center">
+                <img src="https://qph.cf2.quoracdn.net/main-qimg-3cd4287f29cd7fdc7f68ab223107bb64-pjlq"
+                    alt="MRI Scan Image">
+            </div>
+            <br>
+
+            <h2>Project Steps</h2>
+            <h3>1. Data Collection and Preparation</h3>
+            <p>The dataset used in this project consists of 3000 MRI images. Of these, 1500 do not contain brain tumors, while 
+            1500 do. The dataset was used during the training and validation stages of the model.</p>
+
+            <h3>2. Model Training</h3>
+            <p>The YOLOv8 model was trained on this dataset to detect brain tumors. During training, different hyperparameters and 
+            optimization techniques were used to achieve the highest accuracy.</p>
+
+            <h3>3. Model Integration</h3>
+            <p>The trained model was integrated into a Flask-based web application. This allows users to upload MRI images through 
+            the web interface to detect brain tumors. The user-friendly interface provides visual results and quick feedback.</p>
+
+            <h2>Results and Future Work</h2>
+            <p>The brain tumor detections made with the YOLOv8 model assist healthcare professionals with high accuracy rates. 
+            This project is a significant example of how artificial intelligence can be used in healthcare services. Future work 
+            will involve training the model on larger datasets and focusing on the detection of different types of brain tumors.</p>
         </div>
     </div>
 
@@ -188,9 +86,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-4 col-md-6 footer-info">
-                        <h3> Intelligent Magnetic Resonance - IMR </h3>
-                        <p>Our mission is to provide disease detection services from accurate and reliable MR
-                            results
+                        <h3>Intelligent Magnetic Resonance - IMR</h3>
+                        <p>Our mission is to provide disease detection services from accurate and reliable MR results
                             using the latest technology.</p><br>
                     </div>
                     <div class="col-lg-4 col-md-6 footer-contact">
@@ -198,7 +95,7 @@
                         <p>
                             Üniversiteler Mah., ODTÜ Teknokent<br>
                             Ankara, Çankaya 06800<br>
-                            Türkiye<br>
+                            Turkey<br>
                             <strong>Phone:</strong> (0312) 268 32 35<br>
                             <strong>Email:</strong> info@projectimr.com<br>
                         </p>

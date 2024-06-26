@@ -1,5 +1,6 @@
 {
     "python.analysis.extraPaths": [
         "./Mask_RCNN/samples/coco"
-    ]
+    ],
+    "git.ignoreLimitWarning": true
 }

@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/blog1.css') }}">
+    <title>Brain Tumor Information</title>
 </head>
 
 <body>
@@ -20,7 +21,6 @@
                 <li><a href="{{ url_for('home') }}">Home</a></li>
                 <li><a href="{{ url_for('about') }}">About</a></li>
                 <li><a href="{{ url_for('services') }}">Services</a></li>
-                <li><a href="#">Portfolio</a></li>
                 <li><a href="{{ url_for('blogs') }}">Blog</a></li>
                 <li><a href="{{ url_for('contact') }}">Contact</a></li>
             </ul>
@@ -31,42 +31,48 @@
             <div class="line"></div>
         </div>
     </header>
+
     <div class="about-section">
         <div class="container2">
-            <h1>About Brain Tumor</h1>
+            <h1>About Brain Tumors</h1>
 
-            <p>A brain tumor is a collection, or mass, of abnormal cells in your brain. Your skull, which encloses your
-                brain, is very rigid. Any growth inside such a restricted space can cause problems.</p>
-
-            <p>Brain tumors can be cancerous (malignant) or noncancerous (benign). When benign or malignant tumors grow,
-                they can cause the pressure inside your skull to increase. This can cause brain damage, and it can be
-                life-threatening.</p><br>
+            <p>A brain tumor is a collection or mass of abnormal cells in your brain. Since your skull is very rigid,
+                any growth inside such a restricted space can cause problems. Brain tumors can be cancerous (malignant)
+                or noncancerous (benign). When benign or malignant tumors grow, they can cause the pressure inside your
+                skull to increase. This can cause brain damage, and it can be life-threatening.</p>
 
             <div style="text-align:center">
                 <img src="https://i0.wp.com/post.healthline.com/wp-content/uploads/2022/02/2009199_Understanding-Brain-Tumors-01.jpg?w=1155&amp;h=1887"
                     style="width: 725px; height: 500px" alt="Brain Tumor Image">
             </div>
             <br>
-            <h2>How is Brain Tumor diagnosed?</h2>
+
+            <h2>How is a Brain Tumor Diagnosed?</h2>
+
+            <p>Brain tumors are diagnosed using various imaging techniques. The most common and effective method is
+                Magnetic Resonance Imaging (MRI). Below we will discuss how MRI is used in diagnosing brain tumors and
+                the process involved.</p>
 
             <div style="text-align:center">
                 <img src="https://qph.cf2.quoracdn.net/main-qimg-3cd4287f29cd7fdc7f68ab223107bb64-pjlq"
                     alt="MRI Scan Image">
             </div>
             <br>
+
             <h2>Magnetic Resonance Imaging (MRI)</h2>
 
             <p>An MRI uses magnetic fields to produce detailed images of the body. MRI can be used to measure the
                 tumor’s size. A special dye called a contrast medium is given before the scan to create a clearer
                 picture. This dye can be injected into a patient’s vein or given as a pill or liquid to swallow. MRIs
-                create more detailed pictures than CT scans (see below) and are the preferred way to diagnose a brain
-                tumor. The MRI may be of the brain, spinal cord, or both, depending on the type of tumor suspected and
-                the likelihood that it will spread in the CNS. There are different types of MRI. The results of a
-                neuro-examination, done by the internist or neurologist, helps determine which type of MRI to use.</p>
+                create more detailed pictures than CT scans and are the preferred way to diagnose a brain tumor. The MRI
+                may be of the brain, spinal cord, or both, depending on the type of tumor suspected and the likelihood
+                that it will spread in the CNS. There are different types of MRI, and the results of a neuro-examination
+                done by an internist or neurologist help determine which type of MRI to use.</p>
 
-            <p>Here we have 3000 samples of Brain MRI images, 1500 of which show no tumor and 1500 show brain tumor.
-                Using a
-                Convolutional Neural Network, we try to classify whether the sample shows tumor or not.</p>
+            <p>At IMR, we utilize advanced Convolutional Neural Networks (CNN) to classify whether a brain MRI shows the
+                presence of a tumor. Our system is trained on 3000 samples of brain MRI images, with 1500 images showing
+                no tumor and 1500 images showing a brain tumor. This technology aids in providing accurate and reliable
+                diagnostic services.</p>
         </div>
     </div>
 
@@ -75,7 +81,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-4 col-md-6 footer-info">
-                        <h3> Intelligent Magnetic Resonance - IMR </h3>
+                        <h3>Intelligent Magnetic Resonance - IMR</h3>
                         <p>Our mission is to provide disease detection services from accurate and reliable MR results
                             using the latest technology.</p><br>
                     </div>

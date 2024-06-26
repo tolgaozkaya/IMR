@@ -41,7 +41,7 @@
 					<img id="input-img" src="{{ url_for('static', filename='img/brainstorm-2.png') }}"
 						style="max-height: 200px;">
 				</div>
-				<form action="/detect" method="post" enctype="multipart/form-data">
+				<form action="/yolodetect" method="post" enctype="multipart/form-data">
 					<label for="file-upload" class="custom-file-upload">
 						<i class="fas fa-cloud-upload-alt"></i> Upload File
 					</label>
@@ -68,22 +68,19 @@
 		</section>
 
 		<section>
-			<div class="result-container">
-				<h3>Brain Tumor Detection Result</h3>
-				<div class="image-container">
-					{% if prediction is defined and prediction[0][0] == 1 %}
-					<img src="{{ url_for('static', filename='img/check.png') }}" alt="Brain Detection Result">
-					{% elif prediction is defined and prediction[0][0] == 0 %}
-					<img src="{{ url_for('static', filename='img/multiplication-sign.png') }}"
-						alt="Brain Detection Result">
-					{% else %}
-					<img src="{{ url_for('static', filename='img/minus-sign.png') }}" alt="Brain Detection Result">
-					<p>No Image</p>
-					{% endif %}
-				</div>
-				<p>{{ result }}</p>
-			</div>
-		</section>
+            <div class="result-container">
+                <h3>Brain Tumor Detection Result</h3>
+                <div class="image-container">
+                    {% if filename %}
+                    <img src="{{ url_for('static', filename='predictions/' + filename) }}" alt="Brain Detection Result">
+                    {% else %}
+                    <img src="{{ url_for('static', filename='img/minus-sign.png') }}" alt="Brain Detection Result">
+                    <p>No Image</p>
+                    {% endif %}
+                </div>
+                <p>{{ result }}</p>
+            </div>
+        </section>        
 	</main>
 
 	<footer>

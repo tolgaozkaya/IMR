@@ -20,7 +20,6 @@
                 <li><a href="{{ url_for('home') }}">Home</a></li>
                 <li><a href="{{ url_for('about') }}">About</a></li>
                 <li><a href="{{ url_for('services') }}">Services</a></li>
-                <li><a href="#">Portfolio</a></li>
                 <li><a href="{{ url_for('blogs') }}">Blog</a></li>
                 <li><a href="{{ url_for('contact') }}">Contact</a></li>
             </ul>
@@ -40,7 +39,7 @@
                     <img
                         src="https://i0.wp.com/post.healthline.com/wp-content/uploads/2022/02/2009199_Understanding-Brain-Tumors-01.jpg?w=1155&amp;h=1887">
                     <h2>Brain Tumor Detection</h2>
-                    <p> &#183; Using EfficientNetB0</p>
+                    <p> &#183; Using EfficientNetB7</p>
                 </a>
             </div>
             <div class="service">
@@ -51,10 +50,10 @@
                 </a>
             </div>
             <div class="service">
-                <a href="">
-                    <img src="service3.png">
-                    <h2></h2>
-                    <p> </p>
+                <a href="{{ url_for('braintumordetectwithyolo') }}">
+                    <img src="https://i0.wp.com/post.healthline.com/wp-content/uploads/2022/02/2009199_Understanding-Brain-Tumors-01.jpg?w=1155&amp;h=1887">
+                    <h2>Brain Tumor Detection</h2>
+                    <p>&#183; Using YOLOV8 </p>
                 </a>
             </div>
         </div>

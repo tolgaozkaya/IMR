@@ -1,15 +1,16 @@
 import os
-import random
 import numpy as np
 import matplotlib.pyplot as plt
-import keras
+import tensorflow as tf
+import tensorflow_hub as hub
 from keras.models import Sequential
-from keras.layers import Dense, GlobalAveragePooling2D
+from keras.layers import Dense
 from keras.losses import BinaryCrossentropy
 from keras.optimizers import Adam
 from keras.preprocessing.image import ImageDataGenerator
 import warnings
-from keras.applications import EfficientNetB7
+import random
+import cv2
 
 warnings.filterwarnings('ignore')  # Uyarıları devre dışı bırak
 
@@ -21,51 +22,60 @@ SEED = 40
 IMG_SHAPE = (224, 224)  # Görüntü boyutu
 BATCH_SIZE = 32  # Batch boyutu
 
-datagen = ImageDataGenerator(rescale=1/255., validation_split=0.5)  # Veri jeneratörü
-train_data = datagen.flow_from_directory(MAIN_DIR, target_size=IMG_SHAPE, batch_size=BATCH_SIZE, class_mode="binary", shuffle=True, subset="training")  # Eğitim verileri
-test_data = datagen.flow_from_directory(MAIN_DIR, target_size=IMG_SHAPE, batch_size=BATCH_SIZE, class_mode="binary", shuffle=True, subset="validation")  # Test verileri
+# Veri jeneratörü
+datagen = ImageDataGenerator(rescale=1/255., validation_split=0.5)
+train_data = datagen.flow_from_directory(MAIN_DIR, target_size=IMG_SHAPE, batch_size=BATCH_SIZE, class_mode="binary", shuffle=True, subset="training")
+test_data = datagen.flow_from_directory(MAIN_DIR, target_size=IMG_SHAPE, batch_size=BATCH_SIZE, class_mode="binary", shuffle=True, subset="validation")
 
 # EfficientNetB7 ile Transfer Öğrenme
+effnet_url = "https://tfhub.dev/tensorflow/efficientnet/b7/feature-vector/1"
+effnet_layer = hub.KerasLayer(effnet_url, trainable=False, name="feature_extraction_layer")
+
 effnet_model = Sequential([
-    EfficientNetB7(include_top=False, weights="imagenet", input_shape=IMG_SHAPE + (3,)),  # EfficientNetB7 katmanı
-    GlobalAveragePooling2D(),  # Global ortalama havuzlama
-    Dense(1, activation="sigmoid")  # Çıkış katmanı
+    effnet_layer,
+    Dense(1, activation='sigmoid')
 ])
 
-# EfficientNetB7 modelinin derlenmesi
-effnet_model.compile(loss=BinaryCrossentropy(), optimizer=Adam(), metrics=["accuracy"])  # Modeli derle
+effnet_model.build([None, IMG_SHAPE[0], IMG_SHAPE[1], 3])
 
-# EfficientNetB7 modelinin eğitilmesi
-effnet_history = effnet_model.fit(train_data, epochs=10, steps_per_epoch=len(train_data), validation_data=test_data, validation_steps=len(test_data))  # Modeli eğit
+# Modelin derlenmesi
+effnet_model.compile(loss=BinaryCrossentropy(), optimizer=Adam(), metrics=["accuracy"])
 
-# EfficientNetB7 modelinin kaydedilmesi
-effnet_model.save("efficientnet_b7_model.h5")  # Modeli kaydet
+# Modelin eğitilmesi
+effnet_history = effnet_model.fit(train_data, epochs=10, steps_per_epoch=len(train_data), validation_data=test_data, validation_steps=len(test_data))
+
+# Modelin kaydedilmesi
+effnet_model.save("models/efficientnet_b7_model.h5")
 
 # Eğitim ve doğrulama eğrilerinin çizilmesi
 def plot_curves(history):
-    loss = history.history["loss"]  # Eğitim kayıp değerleri
-    val_loss = history.history["val_loss"]  # Doğrulama kayıp değerleri
-    accuracy = history.history["accuracy"]  # Eğitim doğruluk değerleri
-    val_accuracy = history.history["val_accuracy"]  # Doğrulama doğruluk değerleri
-    epochs = range(len(history.history["loss"]))  # Epoch sayısı
+    epochs = range(len(history.history["loss"]))
+    
+    plt.figure(figsize=(14, 5))
+    
+    # Kayıp eğrisi
+    plt.subplot(1, 2, 1)
+    plt.plot(epochs, history.history["loss"], label="Eğitim Kaybı")
+    plt.plot(epochs, history.history["val_loss"], label="Doğrulama Kaybı")
+    plt.title("Eğitim ve Doğrulama Kaybı")
+    plt.xlabel("Epochs")
+    plt.ylabel("Kayıp")
+    plt.legend()
+    
+    # Doğruluk eğrisi
+    plt.subplot(1, 2, 2)
+    plt.plot(epochs, history.history["accuracy"], label="Eğitim Doğruluğu")
+    plt.plot(epochs, history.history["val_accuracy"], label="Doğrulama Doğruluğu")
+    plt.title("Eğitim ve Doğrulama Doğruluğu")
+    plt.xlabel("Epochs")
+    plt.ylabel("Doğruluk")
+    plt.legend()
+    
+    plt.show()
 
-    plt.plot(epochs, loss, label="training_loss")  # Eğitim kayıp eğrisi
-    plt.plot(epochs, val_loss, label="val_loss")  # Doğrulama kayıp eğrisi
-    plt.title("Kayıp")  # Başlık
-    plt.xlabel("Epochs")  # X ekseni etiketi
-    plt.legend()  # Efsane
-    plt.show()  # Grafiği göster
-
-    plt.plot(epochs, accuracy, label="training_accuracy")  # Eğitim doğruluk eğrisi
-    plt.plot(epochs, val_accuracy, label="val_accuracy")  # Doğrulama doğruluk eğrisi
-    plt.title("Doğruluk")  # Başlık
-    plt.xlabel("Epochs")  # X ekseni etiketi
-    plt.legend()  # Efsane
-    plt.show()  # Grafiği göster
-
-# EfficientNetB7 modeli için eğitim eğrilerinin çizilmesi
+# Eğitim eğrilerini çiz
 plot_curves(effnet_history)
 
-# EfficientNetB7 modelinin değerlendirilmesi
-effnet_result = effnet_model.evaluate(test_data, verbose=0)  # Modeli değerlendir
-print(f"Değerlendirme Doğruluğu: {effnet_result[1]*100:.2f}%\nKayıp: {effnet_result[0]:.4f}")  # Değerlendirme sonuçlarını yazdır
+# Modelin değerlendirilmesi
+effnet_result = effnet_model.evaluate(test_data, verbose=0)
+print(f"Değerlendirme Doğruluğu: {effnet_result[1]*100:.2f}%\nKayıp: {effnet_result[0]:.4f}")

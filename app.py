@@ -28,7 +28,7 @@ class FixedDropout(tf.keras.layers.Dropout):
 
 # EffnetB7 modelini özel nesne kapsamı ile yükle
 with custom_object_scope({'FixedDropout': FixedDropout, 'KerasLayer': hub.KerasLayer}):
-    effnet_model = load_model('models/efficientnet_b0_model.h5')
+    effnet_model = load_model('models/efficientnet_b7_model.h5')
 
 # YOLOv8 modelini yükle
 yolo_model = YOLO('models/best_model.pt')
